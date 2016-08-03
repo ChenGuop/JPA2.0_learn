@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640">
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Jpa2.0 lean by ChenGuop</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/ChenGuop/JPA2.0_lean">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Jpa2.0 lean</h1>
+            <h2>JPA2.0 @Id</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/ChenGuop/JPA2.0_lean/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/ChenGuop/JPA2.0_lean/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>
+<a id="45-映射主键" class="anchor" href="#45-%E6%98%A0%E5%B0%84%E4%B8%BB%E9%94%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.5 映射主键</h1>
+
+<p>@(2016/08//03)[ChenGuop]</p>
+
+<p>[TOC]</p>
+
+<blockquote>
+<p>用<a href="https://github.com/Id" class="user-mention">@Id</a>注解, 标识符和主键</p>
+</blockquote>
+
+<h2>
+<a id="重写主键列-column" class="anchor" href="#%E9%87%8D%E5%86%99%E4%B8%BB%E9%94%AE%E5%88%97-column" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>重写主键列 <code>@Column</code>
+</h2>
+
+<h2>
+<a id="标识符生成" class="anchor" href="#%E6%A0%87%E8%AF%86%E7%AC%A6%E7%94%9F%E6%88%90" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>标识符生成</h2>
+
+<blockquote>
+<p><code>@GenerartedValue</code>  (主键生成策略)
+startegy <code>GenerationType</code>:(AUTO 、TABLE、SEQUENCE、IDENTITY)</p>
+</blockquote>
+
+<h3>
+<a id="1自动的生成-auto" class="anchor" href="#1%E8%87%AA%E5%8A%A8%E7%9A%84%E7%94%9F%E6%88%90-auto" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1.自动的生成 AUTO</h3>
+
+<div class="highlight highlight-source-java"><pre>@<span class="pl-smi">Entity</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Employee</span>{
+  <span class="pl-k">@Id</span> <span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">startegy</span><span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>AUTO</span>)
+  <span class="pl-k">private</span> <span class="pl-k">int</span> id;
+
+}
+</pre></div>
+
+<h3>
+<a id="2-使用表的id生成" class="anchor" href="#2-%E4%BD%BF%E7%94%A8%E8%A1%A8%E7%9A%84id%E7%94%9F%E6%88%90" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2. 使用表的id生成</h3>
+
+<blockquote>
+<p>使用一个数据库表，可移植性好，一个id生成表应该拥有两列，1.是string类型：标示特定的生成器序列（主键），2.int 类型存储实际正在生成的id序列。使用：<code>startegy=GenerationType.TABLE</code> </p>
+
+<div class="highlight highlight-source-java"><pre> @TableGeneratorname(name<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>)
+ @<span class="pl-smi">Id</span> @GeneratedValue(startegy<span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>TABLE</span>)
+  <span class="pl-k">private</span> <span class="pl-k">int</span> id; </pre></div>
+</blockquote>
+
+<hr>
+
+<blockquote>
+<p>指定用于id存储的表，</p>
+
+<div class="highlight highlight-source-java"><pre> @TableGeneratorname(name<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>)
+ @<span class="pl-smi">Id</span> @GeneratedValue(generator<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>)
+  <span class="pl-k">private</span> <span class="pl-k">int</span> id; 
+</pre></div>
+</blockquote>
+
+<hr>
+
+<blockquote>
+<p>进一步限定方法将指定表的详细信息
+<code>table</code>:指定表名称
+<code>pkColumnName</code>;唯一标示生成器的主键列的名称
+<code>valueColumnName</code>:存储实际生成的id序列值的列的名称</p>
+
+<ul>
+<li>          表名：<code>ID_GEN</code>
+</li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th align="center">GEN_NAME</th>
+<th align="center">GEN_VAL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Emp_Gen</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+
+<div class="highlight highlight-source-java"><pre>@TableGenerator(name<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>,
+  table<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>ID_GEN<span class="pl-pds">"</span></span>,
+  pkcolnmuName<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>GEN_NAME<span class="pl-pds">"</span></span>,
+  valueColumnName<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>GEN_VAL<span class="pl-pds">"</span></span>)
+</pre></div>
+</blockquote>
+
+<h3>
+<a id="3使用数据库序列的id生成sequence" class="anchor" href="#3%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BA%8F%E5%88%97%E7%9A%84id%E7%94%9F%E6%88%90sequence" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3.使用数据库序列的id生成(SEQUENCE)</h3>
+
+<blockquote>
+<ul>
+<li>没有命名任何生成器</li>
+</ul>
+
+<div class="highlight highlight-source-java"><pre> @<span class="pl-smi">Id</span> @GeneratedValue(startegy<span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>SEQUENCE</span>)
+  <span class="pl-k">private</span> <span class="pl-k">int</span> id; </pre></div>
+</blockquote>
+
+<hr>
+
+<blockquote>
+<ul>
+<li>命名的序列生成器<code>@GeneratoredValue</code>
+</li>
+</ul>
+
+<div class="highlight highlight-source-java"><pre>  @SequenceGenerator(name<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>,sequenceName<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Seq<span class="pl-pds">"</span></span>)
+  @<span class="pl-smi">Id</span> @GeneratedValue(generator<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>)
+  <span class="pl-k">private</span> <span class="pl-k">int</span> id; 
+</pre></div>
+
+<p>创建一个序列SQL如下：</p>
+
+<div class="highlight highlight-source-sql"><pre>CRATE SEQUENCE Emp_Seq
+    MINVALUE <span class="pl-c1">1</span>
+    START WITH <span class="pl-c1">1</span>
+    INCREMENT BY <span class="pl-c1">50</span></pre></div>
+</blockquote>
+
+<h3>
+<a id="4使用数据库标示符的id生成" class="anchor" href="#4%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A0%87%E7%A4%BA%E7%AC%A6%E7%9A%84id%E7%94%9F%E6%88%90" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.使用数据库标示符的id生成</h3>
+
+<p><strong>IDENTITY  需要数据库支持一个主键标示符列</strong><code>需要底层数据库支持</code></p>
+
+<blockquote>
+<p>与其他id生成策略之间的差异：只有当插入发生之后才可以访问标示符，但是其他的生成至少可以提前分配标识符。</p>
+</blockquote>
+
+<div class="highlight highlight-source-java"><pre> @<span class="pl-smi">Id</span> @GeneratedValue(strategy<span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>IDENTITY</span>)
+  <span class="pl-k">private</span> <span class="pl-k">int</span> id; 
+</pre></div>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/ChenGuop">ChenGuop</a> can be found on <a href="https://github.com/ChenGuop/JPA2.0_lean">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="https://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
