@@ -3,48 +3,30 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640">
 
-    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
-    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <script type="text/javascript" src="javascripts/modernizr.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#main_content').headsmart()
-      })
-    </script>
     <title>Jpa2.0 lean by ChenGuop</title>
   </head>
 
   <body>
-    <a id="forkme_banner" href="https://github.com/ChenGuop/JPA2.0_lean">View on GitHub</a>
-    <div class="shell">
 
-      <header>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <h1>Jpa2.0 lean</h1>
-            <h2>JPA2.0 @Id</h2>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-      </header>
+    <header>
+      <div class="container">
+        <h1>Jpa2.0 lean</h1>
+        <h2>JPA2.0 @Id</h2>
 
-      <section id="downloads">
-        <span class="inner">
-          <a href="https://github.com/ChenGuop/JPA2.0_lean/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/ChenGuop/JPA2.0_lean/tarball/master" class="tgz"><em>download</em> .TGZ</a>
-        </span>
-      </section>
+        <section id="downloads">
+          <a href="https://github.com/ChenGuop/JPA2.0_learn/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/ChenGuop/JPA2.0_learn/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/ChenGuop/JPA2.0_learn" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
 
-
-      <span class="banner-fix"></span>
-
-
+    <div class="container">
       <section id="main_content">
         <h1>
 <a id="45-映射主键" class="anchor" href="#45-%E6%98%A0%E5%B0%84%E4%B8%BB%E9%94%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.5 映射主键</h1>
@@ -72,7 +54,7 @@ startegy <code>GenerationType</code>:(AUTO 、TABLE、SEQUENCE、IDENTITY)</p>
 <h3>
 <a id="1自动的生成-auto" class="anchor" href="#1%E8%87%AA%E5%8A%A8%E7%9A%84%E7%94%9F%E6%88%90-auto" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1.自动的生成 AUTO</h3>
 
-<div class="highlight highlight-source-java"><pre>@<span class="pl-smi">Entity</span>
+<div class="highlight highlight-source-java"><pre><span class="pl-k">@Entity</span>
 <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Employee</span>{
   <span class="pl-k">@Id</span> <span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">startegy</span><span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>AUTO</span>)
   <span class="pl-k">private</span> <span class="pl-k">int</span> id;
@@ -86,8 +68,8 @@ startegy <code>GenerationType</code>:(AUTO 、TABLE、SEQUENCE、IDENTITY)</p>
 <blockquote>
 <p>使用一个数据库表，可移植性好，一个id生成表应该拥有两列，1.是string类型：标示特定的生成器序列（主键），2.int 类型存储实际正在生成的id序列。使用：<code>startegy=GenerationType.TABLE</code> </p>
 
-<div class="highlight highlight-source-java"><pre> @TableGeneratorname(name<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>)
- @<span class="pl-smi">Id</span> @GeneratedValue(startegy<span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>TABLE</span>)
+<div class="highlight highlight-source-java"><pre> <span class="pl-k">@TableGeneratorname</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>)
+ <span class="pl-k">@Id</span> <span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">startegy</span><span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>TABLE</span>)
   <span class="pl-k">private</span> <span class="pl-k">int</span> id; </pre></div>
 </blockquote>
 
@@ -96,8 +78,8 @@ startegy <code>GenerationType</code>:(AUTO 、TABLE、SEQUENCE、IDENTITY)</p>
 <blockquote>
 <p>指定用于id存储的表，</p>
 
-<div class="highlight highlight-source-java"><pre> @TableGeneratorname(name<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>)
- @<span class="pl-smi">Id</span> @GeneratedValue(generator<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>)
+<div class="highlight highlight-source-java"><pre> <span class="pl-k">@TableGeneratorname</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>)
+ <span class="pl-k">@Id</span> <span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">generator</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>)
   <span class="pl-k">private</span> <span class="pl-k">int</span> id; 
 </pre></div>
 </blockquote>
@@ -130,10 +112,10 @@ startegy <code>GenerationType</code>:(AUTO 、TABLE、SEQUENCE、IDENTITY)</p>
 </tbody>
 </table>
 
-<div class="highlight highlight-source-java"><pre>@TableGenerator(name<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>,
-  table<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>ID_GEN<span class="pl-pds">"</span></span>,
-  pkcolnmuName<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>GEN_NAME<span class="pl-pds">"</span></span>,
-  valueColumnName<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>GEN_VAL<span class="pl-pds">"</span></span>)
+<div class="highlight highlight-source-java"><pre><span class="pl-k">@TableGenerator</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>,
+  <span class="pl-c1">table</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>ID_GEN<span class="pl-pds">"</span></span>,
+  <span class="pl-c1">pkcolnmuName</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>GEN_NAME<span class="pl-pds">"</span></span>,
+  <span class="pl-c1">valueColumnName</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>GEN_VAL<span class="pl-pds">"</span></span>)
 </pre></div>
 </blockquote>
 
@@ -145,7 +127,7 @@ startegy <code>GenerationType</code>:(AUTO 、TABLE、SEQUENCE、IDENTITY)</p>
 <li>没有命名任何生成器</li>
 </ul>
 
-<div class="highlight highlight-source-java"><pre> @<span class="pl-smi">Id</span> @GeneratedValue(startegy<span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>SEQUENCE</span>)
+<div class="highlight highlight-source-java"><pre> <span class="pl-k">@Id</span> <span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">startegy</span><span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>SEQUENCE</span>)
   <span class="pl-k">private</span> <span class="pl-k">int</span> id; </pre></div>
 </blockquote>
 
@@ -157,8 +139,8 @@ startegy <code>GenerationType</code>:(AUTO 、TABLE、SEQUENCE、IDENTITY)</p>
 </li>
 </ul>
 
-<div class="highlight highlight-source-java"><pre>  @SequenceGenerator(name<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>,sequenceName<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Seq<span class="pl-pds">"</span></span>)
-  @<span class="pl-smi">Id</span> @GeneratedValue(generator<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>)
+<div class="highlight highlight-source-java"><pre>  <span class="pl-k">@SequenceGenerator</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>,<span class="pl-c1">sequenceName</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Seq<span class="pl-pds">"</span></span>)
+  <span class="pl-k">@Id</span> <span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">generator</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Emp_Gen<span class="pl-pds">"</span></span>)
   <span class="pl-k">private</span> <span class="pl-k">int</span> id; 
 </pre></div>
 
@@ -179,23 +161,10 @@ startegy <code>GenerationType</code>:(AUTO 、TABLE、SEQUENCE、IDENTITY)</p>
 <p>与其他id生成策略之间的差异：只有当插入发生之后才可以访问标示符，但是其他的生成至少可以提前分配标识符。</p>
 </blockquote>
 
-<div class="highlight highlight-source-java"><pre> @<span class="pl-smi">Id</span> @GeneratedValue(strategy<span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>IDENTITY</span>)
+<div class="highlight highlight-source-java"><pre> <span class="pl-k">@Id</span> <span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">strategy</span><span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>IDENTITY</span>)
   <span class="pl-k">private</span> <span class="pl-k">int</span> id; 
 </pre></div>
       </section>
-
-      <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/ChenGuop">ChenGuop</a> can be found on <a href="https://github.com/ChenGuop/JPA2.0_lean">GitHub</a></p>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-        <p>Generated with <a href="https://pages.github.com">GitHub Pages</a> using Merlot</p>
-        <span class="octocat"></span>
-      </footer>
-
     </div>
 
     
